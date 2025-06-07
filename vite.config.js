@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   // Configuración para GitHub Pages
-  base: '/Kugis/', // Nombre de tu repositorio
+  base: '/Front-Kugis/', 
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
