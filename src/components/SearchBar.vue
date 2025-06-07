@@ -1,4 +1,4 @@
-<!-- src/components/SearchInput.vue -->
+
 <template>
   <input
     type="text"

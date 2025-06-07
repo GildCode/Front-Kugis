@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const http = axios.create({
-  baseURL: 'http://localhost:8080/api', // Asegúrate que esta URL coincida con tu backend
+  baseURL: 'https://kugis-production.up.railway.app/api', // Asegúrate que esta URL coincida con tu backend
   timeout: 10000,
 })
 

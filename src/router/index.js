@@ -1,17 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import SearchMoviesView from '../views/SearchMoviesView.vue'
-// Vistas (lazy loading)
-const HomeView = () => import('../views/HomeView.vue')
-const MoviesView = () => import('../views/MoviesView.vue')
-const SeriesView = () => import('../views/Series.View.vue')
 
+// Todas las vistas con lazy loading
+const HomeView = () => import('../views/HomeView.vue')
+const MoviesView = () => import('../views/MlatestView..vue')
+const SeriesView = () => import('../views/SeriesDetail.vue')
+const MovieDetail = () => import('../views/MovieDetail.vue')
+const SearchMoviesView = () => import('../views/SearchMoviesView.vue')
+const SeriesDetail = () => import('../views/SeriesDetail.vue')
+const MlatestView = () => import('../views/MlatestView..vue')
+const SlatestView = () => import('../views/SlatestView.vue')
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView,
   },
-
   {
     path: '/movies',
     name: 'movies',
@@ -26,6 +29,28 @@ const routes = [
     path: '/search',
     name: 'search',
     component: SearchMoviesView,
+  },
+  {
+    path: '/movie/:id',
+    name: 'MovieDetail',
+    component: MovieDetail,
+    props: true,
+  },
+  {
+    path: '/series/:id',
+    name: 'SeriesDetail',
+    component: SeriesDetail,
+    props: true,
+  },
+  {
+    path: '/mlatest',
+    name: 'mlatest',
+    component: MlatestView,
+  },
+  {
+    path: '/slatest',
+    name: 'slatest',
+    component: SlatestView,
   },
 ]
 

@@ -1,4 +1,4 @@
-<!-- src/components/Section.vue -->
+
 <template>
   <section class="section">
     <h2>{{ title }}</h2>

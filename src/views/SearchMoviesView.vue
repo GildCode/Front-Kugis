@@ -1,9 +1,10 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router' // Añade useRouter
 import { ref, watch, onMounted } from 'vue'
 import axios from 'axios'
 
 const route = useRoute()
+const router = useRouter() // Instancia del router
 const searchQuery = ref(route.query.query || '')
 const movies = ref([])
 const loading = ref(false)
@@ -19,21 +20,20 @@ const fetchMovies = async () => {
   try {
     console.log(`Realizando búsqueda con: ${searchQuery.value}`)
 
-    const response = await axios.get('http://localhost:8080/api/search/searchcontent', {
-      params: { nameContent: searchQuery.value },
-    })
+    const response = await axios.get(
+      'https://kugis-production.up.railway.app/api/search/searchcontent',
+      {
+        params: { nameContent: searchQuery.value },
+      },
+    )
 
     console.log('Respuesta completa:', response.data)
 
-    // Verificar el formato de la respuesta y procesarla correctamente
     if (response.data && response.data.results && Array.isArray(response.data.results)) {
-      // Si la respuesta tiene un formato { results: [...] }
       movies.value = response.data.results
     } else if (Array.isArray(response.data)) {
-      // Si la respuesta ya es un array
       movies.value = response.data
     } else if (response.data && typeof response.data === 'object') {
-      // Si es un objeto único, lo ponemos en un array
       movies.value = [response.data]
     } else {
       movies.value = []
@@ -49,10 +49,13 @@ const fetchMovies = async () => {
   }
 }
 
-// Ejecutar al montar el componente
+// Función para navegar al detalle de la película
+const goToMovieDetail = (movieId) => {
+  router.push({ name: 'MovieDetail', params: { id: movieId } })
+}
+
 onMounted(fetchMovies)
 
-// Ejecutar cuando cambie el query por navegación
 watch(
   () => route.query.query,
   (newQuery) => {
@@ -70,7 +73,8 @@ watch(
     <div v-if="error" class="error">{{ error }}</div>
 
     <div v-if="movies.length > 0" class="movies-container">
-      <div v-for="movie in movies" :key="movie.id" class="card">
+      <!-- Elimina el div duplicado y deja solo este -->
+      <div v-for="movie in movies" :key="movie.id" class="card" @click="goToMovieDetail(movie.id)">
         <!-- Imagen de la película -->
         <img
           v-if="movie.poster_path"
@@ -96,6 +100,7 @@ watch(
   </div>
 </template>
 
+<!-- Tus estilos se mantienen igual -->
 <style scoped>
 .search-movies-view {
   text-align: center;
@@ -144,6 +149,7 @@ h1 {
 }
 
 .card {
+  cursor: pointer;
   background: #222;
   padding: 15px;
   border-radius: 10px;
